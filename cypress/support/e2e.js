@@ -1,3 +1,4 @@
+/// <reference types="Cypress"/>
 // ***********************************************************
 // This example support/e2e.js is processed and
 // loaded automatically before your test files.
@@ -15,3 +16,8 @@
 
 // Import commands.js using ES2015 syntax:
 import './commands'
+
+beforeEach('Check that server and client are running',()=>{
+    cy.exec('ss -tlpn  | grep 3000.*node').its('stdout').should('not.equal', '')
+    cy.exec('ss -tlpn  | grep 8000.*node').its('stdout').should('not.equal', '')
+})

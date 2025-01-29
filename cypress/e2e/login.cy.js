@@ -25,17 +25,13 @@ describe('Test 1: Login Functionality', () => {
       login.userField().clear()
       login.passField().type('invalid')
       login.submitButton().click()
-      cy.on('window:alert',(txt)=>{
-          expect(txt).to.contains('Please fill in this field');
-      })
+      login.userField().checkValidity("Please fill in this field")
       cy.url().should('eq',Cypress.config().baseUrl) 
 
       login.userField().type('test')
       login.passField().clear()
       login.submitButton().click()
-      cy.on('window:alert',(txt)=>{
-          expect(txt).to.contains('Please fill in this field');
-      })
+      login.passField().checkValidity("Please fill in this field")
       cy.url().should('eq',Cypress.config().baseUrl) 
   })
 

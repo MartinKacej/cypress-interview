@@ -23,3 +23,10 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('checkValidity', { prevSubject: true }, (elem, message) => {
+        cy.wrap(elem).then((el)=>{
+            expect(el.get(0).checkValidity()).eq(false)
+            expect(el.get(0).validationMessage).to.contains(message)
+        })  
+})
