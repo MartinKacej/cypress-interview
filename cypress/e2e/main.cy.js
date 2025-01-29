@@ -32,7 +32,24 @@ describe('Testing Drag and Drop Functionality', () => {
       cy.get('button').contains('Add').click()
       cy.get('.drag-items').children().should('have.length', 1)
   })
-  it('',()=>{
+  it('Drag test',()=>{
+      cy.get('.drag-items').contains('Item 1').should('have.attr','draggable')
+      cy.get('.drag-items').contains('Item 1').invoke('attr','draggable').should('eq','true')
+      cy.get('.drag-items').get('.drag-item').eq(0).should('have.text','Item 1')
+      cy.get('.drag-items').contains('Item 1').trigger('dragstart')
+      cy.get('.drag-items').contains('Item 3').trigger('drop')
+      cy.get('.drag-items').get('.drag-item').eq(0).should('have.text','Item 2')
+      cy.get('.drag-items').get('.drag-item').eq(1).should('have.text','Item 3')
+      cy.get('.drag-items').get('.drag-item').eq(2).should('have.text','Item 1')
+  })
+  it('Drag to invalid area',()=>{
+      cy.get('.drag-items').contains('Item 3').trigger('dragstart')
+      cy.get('.drag-items').get('h3').trigger('drop')
+      cy.get('.drag-items').get('.drag-item').eq(2).should('have.text','Item 3')
+      
+      cy.get('.drag-items').contains('Item 1').trigger('dragstart')
+      cy.get('button').contains('Contact').trigger('drop')
+      cy.get('.drag-items').get('.drag-item').eq(0).should('have.text','Item 1')
   })
 })
 
